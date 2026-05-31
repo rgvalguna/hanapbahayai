@@ -1,0 +1,98 @@
+@import "tailwindcss";
+
+@theme {
+  /* Brand palette — muted, trust-first */
+  --color-brand-50: #f0f7f4;
+  --color-brand-100: #dcede6;
+  --color-brand-200: #b9dccf;
+  --color-brand-300: #8dc4b0;
+  --color-brand-400: #5ea68f;
+  --color-brand-500: #3d8b74;
+  --color-brand-600: #2d705e;
+  --color-brand-700: #265a4d;
+  --color-brand-800: #21483f;
+  --color-brand-900: #1d3c35;
+  --color-brand-950: #0d211e;
+
+  /* Warning / DTI tiers */
+  --color-warning-caution: #f59e0b;
+  --color-warning-strong: #f97316;
+  --color-warning-danger: #ef4444;
+
+  /* Score chips */
+  --color-score-high: #22c55e;
+  --color-score-medium: #eab308;
+  --color-score-low: #ef4444;
+
+  /* Neutral */
+  --color-surface: #f8faf9;
+  --color-surface-elevated: #ffffff;
+  --color-border: #e2e8e4;
+
+  /* Typography */
+  --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  /* Shadows — subtle for data-dense UI */
+  --shadow-card: 0 1px 3px 0 rgb(0 0 0 / 0.07), 0 1px 2px -1px rgb(0 0 0 / 0.05);
+  --shadow-elevated: 0 4px 6px -1px rgb(0 0 0 / 0.07), 0 2px 4px -2px rgb(0 0 0 / 0.05);
+
+  /* Animation */
+  --ease-brand: cubic-bezier(0.4, 0, 0.2, 1);
+  --duration-fast: 150ms;
+}
+
+/* Dark mode via class */
+@variant dark (&:where(.dark, .dark *));
+
+/* Base resets */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  background-color: var(--color-surface);
+  color: theme(colors.gray.900);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* MapLibre GL overrides */
+.maplibregl-map {
+  font-family: var(--font-sans) !important;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: theme(colors.gray.300);
+  border-radius: 9999px;
+}
+
+/* Streaming text fade-in */
+@keyframes stream-char {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.stream-text > * {
+  animation: stream-char var(--duration-fast) var(--ease-brand) both;
+}
+
+/* Financial highlight */
+.dti-safe    { color: var(--color-score-high); }
+.dti-caution { color: var(--color-warning-caution); }
+.dti-warning { color: var(--color-warning-strong); }
+.dti-danger  { color: var(--color-warning-danger); }

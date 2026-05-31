@@ -1,0 +1,19 @@
+{
+  "name": "flag_red_flags",
+  "description": "Run the red-flag detection pipeline on a specific listing. Checks: price vs BIR zonal value, developer complaint history, broker verification status, title type anomalies, photo reuse across other listings, and flood/fault zone proximity. Returns a list of flags with severity (info, caution, warning, critical) and explanatory messages. Always call this during a property deep dive.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "listing_id": {
+        "type": "string",
+        "description": "UUID of the listing to audit."
+      },
+      "include_photo_check": {
+        "type": "boolean",
+        "default": true,
+        "description": "Whether to run perceptual hash deduplication against other listings to detect photo reuse (a common fraud signal). Adds ~200 ms."
+      }
+    },
+    "required": ["listing_id"]
+  }
+}

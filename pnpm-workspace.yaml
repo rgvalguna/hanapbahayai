@@ -1,0 +1,4 @@
+packages:
+  - "web"
+  - "packages/ui"
+  - "packages/schemas"

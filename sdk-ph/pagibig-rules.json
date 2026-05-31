@@ -1,0 +1,69 @@
+{
+  "_version": "2024-07",
+  "_source": "HDMF Circular No. 461-B (July 2024)",
+  "_note": "Verify against latest HDMF circulars before production use.",
+
+  "max_loan_php": 6000000,
+  "max_maturity_age": 75,
+  "max_term_years": 30,
+  "min_contribution_months": 24,
+  "member_monthly_contribution_pct": 0.02,
+  "employer_monthly_contribution_pct": 0.02,
+
+  "rate_tiers": [
+    {
+      "label": "Tier 1",
+      "max_loan_amount": 450000,
+      "annual_rate_pct": 5.375,
+      "max_term_years": 30
+    },
+    {
+      "label": "Tier 2",
+      "max_loan_amount": 750000,
+      "annual_rate_pct": 6.375,
+      "max_term_years": 30
+    },
+    {
+      "label": "Tier 3",
+      "max_loan_amount": 1000000,
+      "annual_rate_pct": 6.625,
+      "max_term_years": 30
+    },
+    {
+      "label": "Tier 4",
+      "max_loan_amount": 2000000,
+      "annual_rate_pct": 6.875,
+      "max_term_years": 30
+    },
+    {
+      "label": "Tier 5",
+      "max_loan_amount": 4000000,
+      "annual_rate_pct": 8.000,
+      "max_term_years": 25
+    },
+    {
+      "label": "Tier 6",
+      "max_loan_amount": 6000000,
+      "annual_rate_pct": 9.500,
+      "max_term_years": 20
+    }
+  ],
+
+  "end_user_financing": {
+    "developer_accreditation_required": true,
+    "max_loan_to_value_pct": 90,
+    "min_down_payment_pct": 10
+  },
+
+  "ofw_housing_loan": {
+    "eligible": true,
+    "note": "OFW members who have at least 24 monthly contributions may apply via Pag-IBIG Fund portal or HDMF overseas desk.",
+    "max_loan_php": 6000000
+  },
+
+  "foreclosed_properties": {
+    "max_loan_to_value_pct": 80,
+    "discount_on_appraised_value_pct": 30,
+    "note": "ROPA properties acquired from foreclosed accounts."
+  }
+}

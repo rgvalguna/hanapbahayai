@@ -1,0 +1,97 @@
+{
+  "_version": "2024",
+  "_source": "BIR Revenue Memorandum Circular — Zonal Valuation. District offices issue updated values periodically.",
+  "_note": "Values below are illustrative samples for major areas. Full dataset must be sourced from BIR RDO lookup. Used for CGT / DST computation base.",
+  "_unit": "PHP per square meter of land",
+
+  "ncr": {
+    "manila": {
+      "rdo": "RDO 33",
+      "zones": [
+        { "area": "Malate", "min_php_sqm": 45000, "max_php_sqm": 120000 },
+        { "area": "Ermita", "min_php_sqm": 50000, "max_php_sqm": 130000 },
+        { "area": "Binondo", "min_php_sqm": 60000, "max_php_sqm": 200000 },
+        { "area": "Intramuros", "min_php_sqm": 40000, "max_php_sqm": 90000 },
+        { "area": "Paco", "min_php_sqm": 18000, "max_php_sqm": 50000 },
+        { "area": "Sampaloc", "min_php_sqm": 15000, "max_php_sqm": 45000 }
+      ]
+    },
+    "makati": {
+      "rdo": "RDO 47",
+      "zones": [
+        { "area": "Ayala Avenue CBD", "min_php_sqm": 180000, "max_php_sqm": 450000 },
+        { "area": "Legazpi Village", "min_php_sqm": 100000, "max_php_sqm": 250000 },
+        { "area": "Bel-Air", "min_php_sqm": 80000, "max_php_sqm": 200000 },
+        { "area": "Guadalupe Nuevo", "min_php_sqm": 40000, "max_php_sqm": 90000 },
+        { "area": "Poblacion", "min_php_sqm": 50000, "max_php_sqm": 120000 }
+      ]
+    },
+    "bgc_taguig": {
+      "rdo": "RDO 44",
+      "zones": [
+        { "area": "Bonifacio Global City Core", "min_php_sqm": 150000, "max_php_sqm": 500000 },
+        { "area": "McKinley Hill", "min_php_sqm": 80000, "max_php_sqm": 200000 },
+        { "area": "Western Bicutan", "min_php_sqm": 10000, "max_php_sqm": 25000 },
+        { "area": "FTI Complex", "min_php_sqm": 15000, "max_php_sqm": 40000 }
+      ]
+    },
+    "pasig": {
+      "rdo": "RDO 43B",
+      "zones": [
+        { "area": "Ortigas CBD", "min_php_sqm": 80000, "max_php_sqm": 250000 },
+        { "area": "Capitol Commons", "min_php_sqm": 70000, "max_php_sqm": 180000 },
+        { "area": "Kapitolyo", "min_php_sqm": 40000, "max_php_sqm": 90000 },
+        { "area": "Ugong Norte", "min_php_sqm": 25000, "max_php_sqm": 60000 }
+      ]
+    },
+    "quezon_city": {
+      "rdo": "RDO 40",
+      "zones": [
+        { "area": "Eastwood City", "min_php_sqm": 60000, "max_php_sqm": 150000 },
+        { "area": "Quezon Avenue CBD", "min_php_sqm": 30000, "max_php_sqm": 80000 },
+        { "area": "Batasan Hills", "min_php_sqm": 12000, "max_php_sqm": 30000 },
+        { "area": "Novaliches", "min_php_sqm": 8000, "max_php_sqm": 20000 },
+        { "area": "Commonwealth", "min_php_sqm": 10000, "max_php_sqm": 28000 }
+      ]
+    },
+    "mandaluyong": {
+      "rdo": "RDO 46",
+      "zones": [
+        { "area": "Shaw Boulevard", "min_php_sqm": 50000, "max_php_sqm": 130000 },
+        { "area": "Pioneer Street", "min_php_sqm": 40000, "max_php_sqm": 100000 },
+        { "area": "Wack-Wack", "min_php_sqm": 60000, "max_php_sqm": 160000 }
+      ]
+    },
+    "paranaque": {
+      "rdo": "RDO 52",
+      "zones": [
+        { "area": "Entertainment City / Bay Area", "min_php_sqm": 80000, "max_php_sqm": 200000 },
+        { "area": "BF Homes", "min_php_sqm": 25000, "max_php_sqm": 65000 },
+        { "area": "Sucat", "min_php_sqm": 15000, "max_php_sqm": 40000 }
+      ]
+    }
+  },
+
+  "cebu": {
+    "cebu_city": {
+      "rdo": "RDO 83",
+      "zones": [
+        { "area": "Cebu IT Park", "min_php_sqm": 40000, "max_php_sqm": 120000 },
+        { "area": "Cebu Business Park", "min_php_sqm": 50000, "max_php_sqm": 140000 },
+        { "area": "Lahug", "min_php_sqm": 20000, "max_php_sqm": 60000 },
+        { "area": "Mandaue City", "min_php_sqm": 10000, "max_php_sqm": 35000 }
+      ]
+    }
+  },
+
+  "davao": {
+    "davao_city": {
+      "rdo": "RDO 112",
+      "zones": [
+        { "area": "Ecoland CBD", "min_php_sqm": 25000, "max_php_sqm": 70000 },
+        { "area": "Buhangin", "min_php_sqm": 10000, "max_php_sqm": 30000 },
+        { "area": "Matina", "min_php_sqm": 15000, "max_php_sqm": 45000 }
+      ]
+    }
+  }
+}

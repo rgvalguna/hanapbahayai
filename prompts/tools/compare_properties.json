@@ -1,0 +1,23 @@
+{
+  "name": "compare_properties",
+  "description": "Generate a structured side-by-side comparison of 2–4 listings against the user's profile. Returns each listing's key attributes, fit scores by dimension, and a comparative narrative identifying the strongest fit, the best value, and the highest risk. Call this when the user asks to compare specific properties.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "listing_ids": {
+        "type": "array",
+        "items": { "type": "string" },
+        "minItems": 2,
+        "maxItems": 4,
+        "description": "UUIDs of the 2–4 listings to compare."
+      },
+      "focus": {
+        "type": "string",
+        "enum": ["overall", "affordability", "commute", "investment", "family"],
+        "default": "overall",
+        "description": "Comparison focus lens. 'family' boosts education and safety dimensions; 'investment' boosts investment and developer dimensions."
+      }
+    },
+    "required": ["listing_ids"]
+  }
+}

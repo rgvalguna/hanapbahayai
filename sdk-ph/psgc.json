@@ -1,0 +1,96 @@
+{
+  "_version": "2024Q3",
+  "_source": "Philippine Statistics Authority — Philippine Standard Geographic Code",
+  "_note": "This is a representative sample of key areas. Load the full PSGC dataset (available at psa.gov.ph) via the ingestion seeder: php artisan db:seed --class=PsgcSeeder",
+  "_total_barangays_full_dataset": 42046,
+
+  "aliases": {
+    "BGC": "Bonifacio Global City",
+    "QC": "Quezon City",
+    "Makati CBD": "Makati City",
+    "Ortigas": "Pasig City",
+    "BF Homes": "Parañaque City",
+    "Las Piñas": "Las Pinas City",
+    "Paranaque": "Parañaque City"
+  },
+
+  "regions": [
+    {
+      "code": "130000000",
+      "name": "National Capital Region",
+      "abbreviation": "NCR",
+      "provinces": [],
+      "cities": [
+        { "code": "133900000", "name": "Makati City", "zip_range": ["1200", "1235"] },
+        { "code": "137600000", "name": "Taguig City",  "zip_range": ["1630", "1639"] },
+        { "code": "137400000", "name": "Pasig City",   "zip_range": ["1600", "1611"] },
+        { "code": "137500000", "name": "Pasay City",   "zip_range": ["1300", "1309"] },
+        { "code": "133700000", "name": "Manila City",  "zip_range": ["1000", "1096"] },
+        { "code": "137100000", "name": "Quezon City",  "zip_range": ["1100", "1135"] },
+        { "code": "136800000", "name": "Mandaluyong City", "zip_range": ["1550", "1555"] },
+        { "code": "136900000", "name": "Marikina City", "zip_range": ["1800", "1811"] },
+        { "code": "137200000", "name": "San Juan City", "zip_range": ["1500", "1504"] },
+        { "code": "137300000", "name": "Pateros",       "zip_range": ["1620"] },
+        { "code": "133600000", "name": "Las Piñas City", "zip_range": ["1740", "1750"] },
+        { "code": "133800000", "name": "Malabon City",  "zip_range": ["1470", "1478"] },
+        { "code": "137000000", "name": "Muntinlupa City", "zip_range": ["1770", "1781"] },
+        { "code": "136600000", "name": "Navotas City",  "zip_range": ["1485", "1489"] },
+        { "code": "136700000", "name": "Parañaque City", "zip_range": ["1700", "1730"] },
+        { "code": "137700000", "name": "Valenzuela City", "zip_range": ["1440", "1447"] },
+        { "code": "133300000", "name": "Caloocan City", "zip_range": ["1400", "1428"] }
+      ],
+      "key_barangays": [
+        { "code": "133900008", "name": "Bel-Air",       "city_code": "133900000" },
+        { "code": "133900014", "name": "Legazpi Village","city_code": "133900000" },
+        { "code": "133900029", "name": "Poblacion",     "city_code": "133900000" },
+        { "code": "133900033", "name": "San Lorenzo",   "city_code": "133900000" },
+        { "code": "137600029", "name": "Bonifacio Global City", "city_code": "137600000" },
+        { "code": "137600025", "name": "McKinley Hill", "city_code": "137600000" },
+        { "code": "137400017", "name": "Ortigas",       "city_code": "137400000" },
+        { "code": "137100058", "name": "Commonwealth",  "city_code": "137100000" },
+        { "code": "137100096", "name": "Eastwood",      "city_code": "137100000" }
+      ]
+    },
+    {
+      "code": "070000000",
+      "name": "Region VII — Central Visayas",
+      "abbreviation": "Region VII",
+      "cities": [
+        { "code": "072217000", "name": "Cebu City",    "zip_range": ["6000", "6015"] },
+        { "code": "072210000", "name": "Mandaue City", "zip_range": ["6014"] },
+        { "code": "072205000", "name": "Lapu-Lapu City","zip_range": ["6015"] }
+      ]
+    },
+    {
+      "code": "110000000",
+      "name": "Region XI — Davao Region",
+      "abbreviation": "Region XI",
+      "cities": [
+        { "code": "112402000", "name": "Davao City", "zip_range": ["8000", "8023"] }
+      ]
+    },
+    {
+      "code": "030000000",
+      "name": "Region III — Central Luzon",
+      "abbreviation": "Region III",
+      "cities": [
+        { "code": "031400000", "name": "Angeles City",  "zip_range": ["2009"] },
+        { "code": "035400000", "name": "San Fernando City", "zip_range": ["2000"] }
+      ],
+      "provinces": [
+        { "code": "031400000", "name": "Pampanga" },
+        { "code": "036900000", "name": "Bulacan" }
+      ]
+    },
+    {
+      "code": "040000000",
+      "name": "Region IV-A — CALABARZON",
+      "abbreviation": "CALABARZON",
+      "provinces": [
+        { "code": "041000000", "name": "Cavite",   "note": "Bacoor, Imus, Dasmariñas — major residential overspill" },
+        { "code": "043400000", "name": "Laguna",   "note": "Biñan, Santa Rosa, Cabuyao, San Pedro" },
+        { "code": "045600000", "name": "Rizal",    "note": "Antipolo, Cainta, Taytay" }
+      ]
+    }
+  ]
+}

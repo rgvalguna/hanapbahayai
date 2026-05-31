@@ -1,0 +1,55 @@
+# Node / pnpm
+node_modules/
+.pnpm-store/
+dist/
+.next/
+.turbo/
+*.tsbuildinfo
+
+# PHP / Composer
+vendor/
+api/bootstrap/cache/
+api/storage/logs/*.log
+api/storage/framework/cache/
+api/storage/framework/sessions/
+api/storage/framework/views/
+.phpunit.cache/
+*.php~
+Homestead.json
+Homestead.yaml
+
+# Python / uv
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+ingestion/.venv/
+ingestion/__pycache__/
+*.pyc
+.pytest_cache/
+celerybeat-schedule
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.production
+!.env.example
+
+# OS
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/settings.json
+
+# Terraform
+infra/terraform/.terraform/
+infra/terraform/**/*.tfstate
+infra/terraform/**/*.tfstate.backup
+infra/terraform/**/*.tfvars
+!infra/terraform/**/*.tfvars.example
+
+# Build artefacts
+*.log
+*.map
+coverage/

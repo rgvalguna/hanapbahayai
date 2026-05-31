@@ -1,0 +1,33 @@
+{
+  "name": "hanapbahay-ai",
+  "version": "0.1.0",
+  "private": true,
+  "engines": {
+    "node": ">=22.0.0",
+    "pnpm": ">=9.0.0"
+  },
+  "packageManager": "pnpm@9.15.0",
+  "scripts": {
+    "build": "turbo build",
+    "dev": "turbo dev --parallel",
+    "lint": "turbo lint",
+    "test": "turbo test",
+    "type-check": "turbo type-check",
+    "clean": "turbo clean",
+    "format": "prettier --write \"{web,packages}/**/*.{ts,tsx,json,md}\" --ignore-path .gitignore",
+    "api:migrate": "cd api && php artisan migrate",
+    "api:seed": "cd api && php artisan db:seed",
+    "api:horizon": "cd api && php artisan horizon",
+    "ingestion:dev": "cd ingestion && uv run uvicorn app.main:app --reload --port 3002"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^8.18.1",
+    "@typescript-eslint/parser": "^8.18.1",
+    "eslint": "^9.17.0",
+    "prettier": "^3.4.2",
+    "prettier-plugin-tailwindcss": "^0.6.9",
+    "turbo": "^2.3.3",
+    "typescript": "^5.7.2",
+    "@types/node": "^22.10.2"
+  }
+}

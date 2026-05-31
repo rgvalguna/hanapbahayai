@@ -1,0 +1,28 @@
+{
+  "name": "fetch_market_stats",
+  "description": "Retrieve current market statistics for a specific area and property type: median price per sqm, 3-month and 12-month price trend, average days on market, and inventory volume. Use this to contextualise whether a listing is fairly priced, overpriced, or a bargain relative to the local market.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "city": {
+        "type": "string",
+        "description": "City or municipality name (e.g., 'Taguig', 'Cebu City')."
+      },
+      "barangay": {
+        "type": "string",
+        "description": "Barangay name for hyper-local stats. Optional — omit for city-level stats."
+      },
+      "property_type": {
+        "type": "string",
+        "enum": ["condo", "house_and_lot", "townhouse", "lot", "apartment"],
+        "description": "Property type to filter statistics."
+      },
+      "sqm_band": {
+        "type": "string",
+        "enum": ["under_30", "30_to_60", "60_to_100", "100_to_150", "over_150"],
+        "description": "Floor area band for more precise price-per-sqm benchmarks. Optional."
+      }
+    },
+    "required": ["city", "property_type"]
+  }
+}

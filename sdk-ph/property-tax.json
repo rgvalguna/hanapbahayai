@@ -1,0 +1,50 @@
+{
+  "_version": "2024",
+  "_source": "Local Government Code of the Philippines (RA 7160), BIR Revenue Regulations",
+  "_note": "RPT rates vary by LGU. Values here are maximums under RA 7160. Always verify with the specific city/municipality assessor.",
+
+  "real_property_tax": {
+    "province_rate_pct": 1.0,
+    "city_or_municipality_rate_pct": 2.0,
+    "special_education_fund_pct": 1.0,
+    "note": "SEF is levied on top of the basic RPT. Total effective rate for cities: up to 3%."
+  },
+
+  "ncr_assessment_levels": {
+    "residential": [
+      { "max_value_php": 175000,   "assessment_level_pct": 0  },
+      { "max_value_php": 300000,   "assessment_level_pct": 10 },
+      { "max_value_php": 500000,   "assessment_level_pct": 20 },
+      { "max_value_php": 750000,   "assessment_level_pct": 25 },
+      { "max_value_php": 1000000,  "assessment_level_pct": 30 },
+      { "max_value_php": 2000000,  "assessment_level_pct": 35 },
+      { "max_value_php": 5000000,  "assessment_level_pct": 40 },
+      { "max_value_php": 10000000, "assessment_level_pct": 50 },
+      { "max_value_php": null,     "assessment_level_pct": 60 }
+    ],
+    "commercial": [
+      { "max_value_php": 300000,   "assessment_level_pct": 30 },
+      { "max_value_php": 500000,   "assessment_level_pct": 35 },
+      { "max_value_php": 750000,   "assessment_level_pct": 40 },
+      { "max_value_php": 1000000,  "assessment_level_pct": 50 },
+      { "max_value_php": 2000000,  "assessment_level_pct": 60 },
+      { "max_value_php": 5000000,  "assessment_level_pct": 70 },
+      { "max_value_php": null,     "assessment_level_pct": 80 }
+    ]
+  },
+
+  "transfer_taxes": {
+    "documentary_stamp_tax_pct": 1.5,
+    "transfer_tax_province_pct": 0.5,
+    "transfer_tax_city_pct": 0.75,
+    "registration_fee_approx_pct": 0.25,
+    "notarial_fee_approx_pct": 0.1,
+    "capital_gains_tax_pct": 6.0,
+    "note": "CGT applies to seller. DST, transfer tax, and registration fee are buyer-side costs. Rates applied to whichever is higher: contract price or zonal value."
+  },
+
+  "condominium_corp_dues": {
+    "typical_range_php_per_sqm_per_month": { "min": 60, "max": 150 },
+    "note": "Association dues vary widely by project tier. Luxury condo in BGC can exceed PHP 200/sqm/month."
+  }
+}

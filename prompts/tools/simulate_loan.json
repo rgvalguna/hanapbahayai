@@ -1,0 +1,48 @@
+{
+  "name": "simulate_loan",
+  "description": "Run one or more loan simulations for a property. Supports Pag-IBIG, specific bank presets, and custom amortization. Returns monthly payment, total interest, DTI ratio, and eligibility details. Always call this before stating any amortization figure to the user.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "listing_id": {
+        "type": "string",
+        "description": "UUID of the listing. Used to look up the property price automatically."
+      },
+      "property_price": {
+        "type": "number",
+        "description": "Property price in PHP. Required if listing_id is not provided."
+      },
+      "down_payment": {
+        "type": "number",
+        "description": "Down payment amount in PHP."
+      },
+      "modes": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["pagibig", "bank_bpi", "bank_bdo", "bank_metrobank", "bank_security_bank", "bank_rcbc", "bank_pnb", "custom"]
+        },
+        "description": "Which loan programs to simulate. Include 'pagibig' if the user is a Pag-IBIG member. Include one or more bank codes to compare. Default: ['pagibig', 'bank_bpi', 'bank_bdo']."
+      },
+      "term_years": {
+        "type": "integer",
+        "description": "Loan term in years. Default: 20."
+      },
+      "custom_annual_rate_pct": {
+        "type": "number",
+        "description": "Annual interest rate in percent for 'custom' mode."
+      },
+      "include_stress_test": {
+        "type": "boolean",
+        "default": false,
+        "description": "If true, also run the stress test (+200 bps rate shock, 20% income drop, and OFW FX shock if applicable)."
+      },
+      "include_hidden_costs": {
+        "type": "boolean",
+        "default": true,
+        "description": "If true, append a hidden-cost breakdown (DST, transfer tax, registration, notarial, broker, moving)."
+      }
+    },
+    "required": []
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "score_property",
+  "description": "Compute the multi-factor fit score for a specific listing against the current user's profile. Returns dimension scores (affordability, commute, safety, flood, education, healthcare, internet, investment, developer, livability), the weighted total, a plain-language rationale, and any warnings. Always call this before making a detailed recommendation.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "listing_id": {
+        "type": "string",
+        "description": "UUID of the listing to score."
+      },
+      "weight_overrides": {
+        "type": "object",
+        "description": "Optional map of dimension → weight (0–1) to override the user's default archetype weights for this scoring call. Values must sum to 1.0. Use only when the user explicitly requests a custom weighting (e.g., 'score this as an investment, not a home').",
+        "additionalProperties": { "type": "number" }
+      }
+    },
+    "required": ["listing_id"]
+  }
+}

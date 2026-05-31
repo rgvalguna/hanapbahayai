@@ -1,0 +1,52 @@
+{
+  "name": "search_listings",
+  "description": "Search the HanapBahay listing database for properties matching the given criteria. Returns a ranked list of live listings with key fields. Call this whenever the user asks to find, browse, or discover properties.",
+  "input_schema": {
+    "type": "object",
+    "properties": {
+      "property_type": {
+        "type": "array",
+        "items": { "type": "string", "enum": ["condo", "house_and_lot", "townhouse", "lot", "apartment"] },
+        "description": "One or more property types to include. Omit to search all types."
+      },
+      "min_price": {
+        "type": "number",
+        "description": "Minimum price in PHP. Omit if no lower bound."
+      },
+      "max_price": {
+        "type": "number",
+        "description": "Maximum price in PHP. Set to the buyer's maximum affordable price unless they explicitly ask to see beyond it."
+      },
+      "min_bedrooms": {
+        "type": "integer",
+        "description": "Minimum number of bedrooms."
+      },
+      "city": {
+        "type": "string",
+        "description": "City or municipality name to search within."
+      },
+      "lat": {
+        "type": "number",
+        "description": "Latitude of a reference point (e.g., workplace) for proximity search."
+      },
+      "lng": {
+        "type": "number",
+        "description": "Longitude of the reference point."
+      },
+      "radius_km": {
+        "type": "number",
+        "description": "Search radius in kilometres around the lat/lng point."
+      },
+      "q": {
+        "type": "string",
+        "description": "Free-text search query (e.g., 'near BGC with pool')."
+      },
+      "per_page": {
+        "type": "integer",
+        "default": 10,
+        "description": "Number of results to return. Default 10, max 50."
+      }
+    },
+    "required": []
+  }
+}
