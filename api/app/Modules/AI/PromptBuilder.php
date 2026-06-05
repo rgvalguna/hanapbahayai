@@ -15,8 +15,13 @@ class PromptBuilder
     }
 
     /**
-     * Build the system prompt array for Anthropic API with prompt caching.
-     * Returns two cache-control blocks: static base + dynamic profile.
+     * Build the system prompt array for the Anthropic API.
+     *
+     * Only the static base prompt (which never changes per-user) is marked with
+     * cache_control so Anthropic can cache it across requests — fixes B5.
+     * The per-user profile block changes on every turn and must NOT be cached;
+     * adding cache_control to it would yield ~0% hit rate while incurring the
+     * cache-write surcharge on every request.
      */
     public function build(User $user): array
     {
@@ -26,14 +31,14 @@ class PromptBuilder
 
         return [
             [
-                'type' => 'text',
-                'text' => trim($staticText),
-                'cache_control' => ['type' => 'ephemeral'],
+                'type'          => 'text',
+                'text'          => trim($staticText),
+                'cache_control' => ['type' => 'ephemeral'],  // stable — cache this
             ],
             [
                 'type' => 'text',
                 'text' => $profileBlock,
-                'cache_control' => ['type' => 'ephemeral'],
+                // No cache_control — per-user / per-turn, never cache
             ],
         ];
     }
@@ -88,11 +93,20 @@ class PromptBuilder
                 $lines[] = sprintf('Combined Household Income: PHP %s', number_format($combined, 0));
             }
 
-            // Derived affordability context
-            $takeHome = $finances->gross_monthly_income_php * 0.85; // rough estimate
-            $maxAmort = $takeHome * 0.30;
+            // Affordability context — gross-income basis is canonical (lender reality).
+            // Take-home is shown as a sustainability overlay only, not as the gating number.
+            $grossIncome = $finances->gross_monthly_income_php;
+            $obligations = $finances->monthly_obligations_php ?? 0;
+
+            // DTI gating (matches DTIEngine thresholds): 30% of gross
+            $maxAmortGross = $grossIncome * 0.30;
+            $lines[] = sprintf('Max Monthly Amortization — DTI gate (30%% of gross): PHP %s', number_format($maxAmortGross, 0));
+
+            // Sustainability overlay: 30% of estimated take-home (advisory, not a hard cap)
+            $takeHome       = $grossIncome * 0.85; // rough deduction estimate
+            $maxAmortTakeHome = $takeHome * 0.30;
             $lines[] = sprintf('Estimated Take-Home: PHP %s', number_format($takeHome, 0));
-            $lines[] = sprintf('Max Affordable Monthly Amortization (30%% DTI): PHP %s', number_format($maxAmort, 0));
+            $lines[] = sprintf('Sustainability overlay (30%% of take-home, advisory only): PHP %s', number_format($maxAmortTakeHome, 0));
         }
 
         // Preferences (model may not exist yet)

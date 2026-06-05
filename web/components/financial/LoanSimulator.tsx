@@ -1,9 +1,11 @@
 "use client"
 
-import { useState, useCallback } from "react"
+import { useState } from "react"
+import { useQuery } from "@tanstack/react-query"
 import { formatPHP } from "@/lib/utils"
 import { DTIGauge } from "./DTIGauge"
-import { Calculator, ChevronDown, ChevronUp } from "lucide-react"
+import { Calculator, ChevronDown, ChevronUp, Loader2 } from "lucide-react"
+import { simulatePagIBIG } from "@/lib/api/financial"
 
 interface LoanSimulatorProps {
   listingPrice: number
@@ -18,8 +20,6 @@ const BANK_RATES: { label: string; rate: number }[] = [
   { label: "Metrobank (6.75%)", rate: 6.75 },
   { label: "Security Bank (6.25%)", rate: 6.25 },
 ]
-
-const PAGIBIG_RATE = 6.375 // midpoint illustrative default
 
 function pmt(principal: number, annualRate: number, termYears: number): number {
   if (annualRate === 0) return principal / (termYears * 12)
@@ -38,14 +38,35 @@ export function LoanSimulator({ listingPrice, listingSlug: _slug }: LoanSimulato
 
   const downPayment = (listingPrice * downPct) / 100
   const loanAmount = listingPrice - downPayment
-  const rate = mode === "pagibig" ? PAGIBIG_RATE : (BANK_RATES[bankRateIdx]?.rate ?? 6.5)
 
-  const monthly = pmt(loanAmount, rate, termYears)
-  const dtiRatio = monthlyIncome > 0 ? monthly / monthlyIncome : 0
-  const totalInterest = monthly * termYears * 12 - loanAmount
+  // Pag-IBIG: fetch real eligibility + rate from backend
+  const pagibigQuery = useQuery({
+    queryKey: ["pagibig-sim", listingPrice, downPct, termYears, monthlyIncome],
+    queryFn: () =>
+      simulatePagIBIG({
+        property_value: listingPrice,
+        gross_monthly_income: monthlyIncome,
+        age: 30, // conservative default — user can update via profile
+        is_pagibig_member: true,
+        requested_loan: loanAmount,
+        term_years: termYears,
+      }),
+    enabled: mode === "pagibig",
+    staleTime: 60_000,
+    retry: false,
+  })
+
+  // Derive display values — backend for Pag-IBIG, client-side PMT for bank
+  const bankRate = BANK_RATES[bankRateIdx]?.rate ?? 6.5
+  const bankMonthly = pmt(loanAmount, bankRate, termYears)
+
+  const pagibigData = pagibigQuery.data
+  const monthly = mode === "pagibig" ? (pagibigData?.monthly_payment ?? pmt(loanAmount, 6.375, termYears)) : bankMonthly
+  const rate = mode === "pagibig" ? (pagibigData?.annual_rate_pct ?? 6.375) : bankRate
+  const totalInterest = mode === "pagibig" ? (pagibigData?.total_interest ?? monthly * termYears * 12 - loanAmount) : bankMonthly * termYears * 12 - loanAmount
   const totalCost = listingPrice + totalInterest
-
-  const closingCosts = listingPrice * 0.065 // ~6.5% mid estimate
+  const closingCosts = listingPrice * 0.065
+  const dtiRatio = monthlyIncome > 0 ? monthly / monthlyIncome : 0
 
   const inputCls =
     "w-full rounded-lg border border-[--color-border] px-3 py-2 text-sm focus:border-[--color-brand-500] focus:outline-none focus:ring-2 focus:ring-[--color-brand-500]/20"
@@ -146,6 +167,15 @@ export function LoanSimulator({ listingPrice, listingSlug: _slug }: LoanSimulato
           </div>
         )}
 
+        {/* Pag-IBIG ineligibility banner */}
+        {mode === "pagibig" && pagibigData && !pagibigData.eligible && (
+          <div className="rounded-lg border border-amber-200 bg-amber-50 px-3 py-2 text-xs text-amber-800">
+            <strong>Not eligible for Pag-IBIG:</strong> {pagibigData.ineligibility_reason ?? "Property value or income threshold not met."}
+            <br />
+            <span className="text-amber-600">Showing illustrative rates below.</span>
+          </div>
+        )}
+
         {/* Monthly income for DTI */}
         <div>
           <label className={labelCls}>Your take-home income / mo</label>
@@ -164,9 +194,13 @@ export function LoanSimulator({ listingPrice, listingSlug: _slug }: LoanSimulato
       <div className="border-t border-[--color-border] bg-[--color-brand-50] px-5 py-4">
         <div className="mb-3 flex items-baseline justify-between">
           <span className="text-xs text-gray-500">Est. monthly payment</span>
-          <span className="text-2xl font-bold text-gray-900 tabular-nums">
-            {formatPHP(monthly)}
-          </span>
+          {mode === "pagibig" && pagibigQuery.isFetching ? (
+            <Loader2 className="h-5 w-5 animate-spin text-[--color-brand-500]" />
+          ) : (
+            <span className="text-2xl font-bold text-gray-900 tabular-nums">
+              {formatPHP(monthly)}
+            </span>
+          )}
         </div>
 
         <DTIGauge ratio={dtiRatio} className="mb-4" />
@@ -205,3 +239,4 @@ export function LoanSimulator({ listingPrice, listingSlug: _slug }: LoanSimulato
     </div>
   )
 }
+

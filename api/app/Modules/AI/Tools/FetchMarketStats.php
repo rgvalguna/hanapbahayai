@@ -75,7 +75,7 @@ class FetchMarketStats
     private function deriveLiveStats(string $city, string $type, ?string $barangay, ?string $sqmBand): array
     {
         $query = DB::table('listings')
-            ->where('status', 'live')
+            ->where('status', 'active')
             ->where('property_type', $type)
             ->whereNull('deleted_at')
             ->whereRaw("address->>'city' ilike ?", [$city])

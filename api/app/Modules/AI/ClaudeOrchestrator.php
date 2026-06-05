@@ -47,27 +47,41 @@ class ClaudeOrchestrator
         $inputTokens = $outputTokens = $cacheRead = $cacheWrite = 0;
 
         for ($iter = 0; $iter < self::MAX_TOOL_ITERS; $iter++) {
+            $iterText = '';
+
             [$blocks, $usage, $stopReason] = $this->callApi(
                 $system,
                 $messages,
                 $tools,
                 $model,
-                function (string $text) use ($onDelta, &$fullText) {
+                function (string $text) use ($onDelta, &$fullText, &$iterText) {
                     $fullText .= $text;
+                    $iterText .= $text;
                     $onDelta(['type' => 'delta', 'delta' => $text]);
                 }
             );
 
-            $inputTokens  += $usage['input_tokens']              ?? 0;
-            $outputTokens += $usage['output_tokens']             ?? 0;
-            $cacheRead    += $usage['cache_read_input_tokens']   ?? 0;
+            $inputTokens  += $usage['input_tokens']                ?? 0;
+            $outputTokens += $usage['output_tokens']               ?? 0;
+            $cacheRead    += $usage['cache_read_input_tokens']     ?? 0;
             $cacheWrite   += $usage['cache_creation_input_tokens'] ?? 0;
 
             if ($stopReason !== 'tool_use') {
+                // Final turn — persist with full content_blocks for faithful replay
+                ConsultationMessage::create([
+                    'consultation_id'    => $consultation->id,
+                    'role'               => 'assistant',
+                    'content'            => $iterText,
+                    'content_blocks'     => $blocks,
+                    'input_tokens'       => $inputTokens,
+                    'output_tokens'      => $outputTokens,
+                    'cache_read_tokens'  => $cacheRead,
+                    'cache_write_tokens' => $cacheWrite,
+                ]);
                 break;
             }
 
-            // Collect all tool-use blocks and build tool_result responses
+            // Tool-use turn — collect results
             $assistantContent = $blocks;
             $toolResults      = [];
 
@@ -95,20 +109,26 @@ class ClaudeOrchestrator
                 ];
             }
 
-            // Append assistant turn + tool results for next iteration
+            // Persist intermediate assistant turn (tool_use blocks) — fixes B4
+            ConsultationMessage::create([
+                'consultation_id' => $consultation->id,
+                'role'            => 'assistant',
+                'content'         => $iterText,
+                'content_blocks'  => $assistantContent,
+            ]);
+
+            // Persist tool result turn (user role with tool_result blocks) — fixes B4
+            ConsultationMessage::create([
+                'consultation_id' => $consultation->id,
+                'role'            => 'user',
+                'content'         => '',
+                'content_blocks'  => $toolResults,
+            ]);
+
+            // Append for next API iteration (in-memory only)
             $messages[] = ['role' => 'assistant', 'content' => $assistantContent];
             $messages[] = ['role' => 'user',      'content' => $toolResults];
         }
-
-        // Persist the final assistant message
-        ConsultationMessage::create([
-            'consultation_id' => $consultation->id,
-            'role'            => 'assistant',
-            'content'         => $fullText,
-            'tokens_in'       => $inputTokens,
-            'tokens_out'      => $outputTokens,
-            'model'           => $model,
-        ]);
 
         // Update consultation token totals
         $consultation->increment('total_input_tokens',        $inputTokens);
@@ -120,17 +140,29 @@ class ClaudeOrchestrator
     }
 
     /**
-     * Build the messages array from DB history plus an appended listing context block.
+     * Build the messages array from DB history plus an optional listing context block.
+     *
+     * For turns that have content_blocks stored (assistant tool-use turns, tool_result
+     * turns), the full blocks array is used as the message content — this is the B4
+     * fix that enables faithful multi-turn tool-context replay.
      */
     private function buildMessages(Consultation $consultation, array $listings): array
     {
         $messages = $consultation
             ->messages()
             ->orderBy('created_at')
-            ->get(['role', 'content'])
-            ->map(fn ($m) => ['role' => $m->role, 'content' => $m->content])
+            ->get(['role', 'content', 'content_blocks'])
+            ->map(function ($m) {
+                // Use full content_blocks when stored (tool-use / tool-result turns)
+                if (!empty($m->content_blocks)) {
+                    return ['role' => $m->role, 'content' => $m->content_blocks];
+                }
+                return ['role' => $m->role, 'content' => $m->content];
+            })
             ->toArray();
 
+        // Append listing context only when explicitly provided with this request.
+        // Stored as in-memory context only — previous turns already captured in DB.
         if (!empty($listings)) {
             $context = "Relevant listings retrieved for this turn:\n\n"
                 . json_encode($listings, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);

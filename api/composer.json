@@ -4,8 +4,8 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "^8.3",
-        "laravel/framework": "^13.0",
+        "php": "^8.4",
+        "laravel/framework": "^12.0",
         "laravel/sanctum": "^4.0",
         "laravel/horizon": "^5.0",
         "laravel/scout": "^10.0",
@@ -14,15 +14,11 @@
         "laravel/telescope": "^5.0",
         "spatie/laravel-permission": "^6.0",
         "spatie/laravel-query-builder": "^6.0",
-        "spatie/laravel-media-library": "^11.0",
+        "spatie/laravel-medialibrary": "^11.0",
         "spatie/laravel-activitylog": "^4.0",
-        "mstaack/laravel-postgis": "^6.0",
         "predis/predis": "^2.0",
         "guzzlehttp/guzzle": "^7.0",
-        "knuckleswtf/scribe": "^4.0",
-        "league/fractal": "^0.20",
-        "ext-pgsql": "*",
-        "ext-redis": "*"
+        "league/fractal": "^0.20"
     },
     "require-dev": {
         "pestphp/pest": "^3.0",
@@ -67,6 +63,12 @@
         "allow-plugins": {
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
+        },
+        "platform": {
+            "ext-pgsql": "8.3",
+            "ext-redis": "5.3",
+            "ext-pcntl": "8.3",
+            "ext-exif": "8.3"
         }
     },
     "minimum-stability": "stable",

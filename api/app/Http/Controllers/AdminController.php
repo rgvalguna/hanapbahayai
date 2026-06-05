@@ -18,7 +18,7 @@ class AdminController extends Controller
             'per_page' => 'nullable|integer|min:1|max:50',
         ]);
 
-        $listings = Listing::where('status', 'pending')
+        $listings = Listing::where('status', 'under_review')
             ->with('developer', 'broker')
             ->orderBy('created_at')
             ->paginate($validated['per_page'] ?? 20);
@@ -28,9 +28,9 @@ class AdminController extends Controller
 
     public function approveListing(Request $request, Listing $listing): JsonResponse
     {
-        abort_if($listing->status !== 'pending', 422, 'Listing is not in pending state.');
+        abort_if($listing->status !== 'under_review', 422, 'Listing is not in pending state.');
 
-        $listing->update(['status' => 'live']);
+        $listing->update(['status' => 'active']);
 
         return response()->json(['data' => $listing->fresh()]);
     }
@@ -41,10 +41,10 @@ class AdminController extends Controller
             'reason' => 'nullable|string|max:500',
         ]);
 
-        abort_if($listing->status !== 'pending', 422, 'Listing is not in pending state.');
+        abort_if($listing->status !== 'under_review', 422, 'Listing is not in pending state.');
 
         $listing->update([
-            'status'      => 'rejected',
+            'status'      => 'off_market',
             'fraud_flags' => array_merge(
                 $listing->fraud_flags ?? [],
                 $validated['reason'] ? [['type' => 'admin_rejection', 'note' => $validated['reason']]] : []

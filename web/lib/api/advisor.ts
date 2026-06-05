@@ -4,8 +4,9 @@ const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
 export interface ConsultationMessage {
   id: string
-  role: "user" | "assistant"
+  role: "user" | "assistant" | "tool"
   content: string
+  tool_name?: string | null
   created_at: string
 }
 
@@ -130,13 +131,23 @@ export async function streamAdvisorMessage({
       if (!line.startsWith("data: ")) continue
       const raw = line.slice(6).trim()
       try {
-        const parsed = JSON.parse(raw) as { type: string; delta?: string }
+        const parsed = JSON.parse(raw) as {
+          type: string
+          delta?: string
+          tool?: string
+          message?: string
+        }
         if (parsed.type === "done") {
           onDone()
           return
         }
         if (parsed.type === "delta" && parsed.delta) {
           onDelta(parsed.delta)
+        }
+        // tool_call events are informational; ignore silently for now
+        if (parsed.type === "error" && parsed.message) {
+          onError(parsed.message)
+          return
         }
       } catch {
         // ignore malformed SSE lines

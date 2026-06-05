@@ -45,7 +45,7 @@ interface PreferenceStep {
 const PROPERTY_TYPE_OPTIONS = [
   { value: "condo", label: "Condominium" },
   { value: "townhouse", label: "Townhouse" },
-  { value: "house_lot", label: "House & Lot" },
+  { value: "single_detached", label: "House & Lot" },
   { value: "lot_only", label: "Lot Only" },
 ]
 

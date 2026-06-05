@@ -13,6 +13,18 @@ interface Message {
 
 const API_BASE = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:8000"
 
+async function ensureConsultation(): Promise<string> {
+  const res = await fetch(`${API_BASE}/api/v1/advisor/consultations`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({ title: "New consultation" }),
+    credentials: "include",
+  })
+  if (!res.ok) throw new Error(`Failed to create consultation: ${res.status}`)
+  const json = await res.json() as { data: { id: string } }
+  return json.data.id
+}
+
 let consultationId: string | null = null
 
 function MessageBubble({ message }: { message: Message }) {
@@ -86,9 +98,12 @@ export default function AdvisorPage() {
     abortRef.current = new AbortController()
 
     try {
-      const url = consultationId
-        ? `${API_BASE}/api/v1/advisor/consultations/${consultationId}/converse`
-        : `${API_BASE}/api/v1/advisor/converse`
+      // Create a consultation session on the first message
+      if (!consultationId) {
+        consultationId = await ensureConsultation()
+      }
+
+      const url = `${API_BASE}/api/v1/advisor/consultations/${consultationId}/messages`
 
       const res = await fetch(url, {
         method: "POST",
@@ -99,10 +114,6 @@ export default function AdvisorPage() {
       })
 
       if (!res.ok || !res.body) throw new Error(`Server error ${res.status}`)
-
-      // Extract consultation ID from response headers if first message
-      const newId = res.headers.get("X-Consultation-Id")
-      if (newId) consultationId = newId
 
       const reader = res.body.getReader()
       const decoder = new TextDecoder()
@@ -121,16 +132,24 @@ export default function AdvisorPage() {
             const data = line.slice(6).trim()
             if (data === "[DONE]") break
             try {
-              const parsed = JSON.parse(data) as { delta?: string }
-              if (parsed.delta) {
+              const parsed = JSON.parse(data) as {
+                type?: string
+                delta?: string
+                tool_name?: string
+                error?: string
+              }
+              if (parsed.type === "delta" || parsed.delta) {
                 setMessages((prev) =>
                   prev.map((m) =>
                     m.id === assistantMsgId
-                      ? { ...m, content: m.content + parsed.delta }
+                      ? { ...m, content: m.content + (parsed.delta ?? "") }
                       : m,
                   ),
                 )
+              } else if (parsed.type === "error") {
+                throw new Error(parsed.error ?? "Advisor error")
               }
+              // tool_call events are informational; no UI update needed
             } catch {
               // ignore non-JSON SSE lines
             }

@@ -1,7 +1,7 @@
 import { apiFetch } from "./client"
 
-export type PropertyType = "condo" | "house_and_lot" | "townhouse" | "lot" | "apartment"
-export type ListingStatus = "live" | "sold" | "withdrawn"
+export type PropertyType = "condo" | "townhouse" | "single_detached" | "lot_only" | "commercial" | "warehouse"
+export type ListingStatus = "active" | "under_review" | "sold" | "off_market" | "archived"
 
 export interface Listing {
   id: string

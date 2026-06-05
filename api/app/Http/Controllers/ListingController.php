@@ -13,7 +13,7 @@ class ListingController extends Controller
         $validated = $request->validate([
             'q'             => 'nullable|string|max:200',
             'city'          => 'nullable|string|max:100',
-            'property_type' => 'nullable|in:condo,house_and_lot,townhouse,lot,apartment',
+            'property_type' => 'nullable|in:condo,townhouse,single_detached,lot_only,commercial,warehouse',
             'min_price'     => 'nullable|numeric|min:0',
             'max_price'     => 'nullable|numeric|min:0',
             'min_bedrooms'  => 'nullable|integer|min:0',
@@ -27,10 +27,10 @@ class ListingController extends Controller
 
         if (!empty($validated['q'])) {
             $listings = Listing::search($validated['q'])
-                ->query(fn ($q) => $q->where('status', 'live')->with('developer', 'broker'))
+                ->query(fn ($q) => $q->where('status', 'active')->with('developer', 'broker'))
                 ->paginate($validated['per_page'] ?? 20);
         } else {
-            $query = Listing::where('status', 'live')->with('developer', 'broker');
+            $query = Listing::where('status', 'active')->with('developer', 'broker');
 
             if (!empty($validated['property_type'])) {
                 $query->where('property_type', $validated['property_type']);
@@ -79,7 +79,7 @@ class ListingController extends Controller
 
     public function similar(Listing $listing): JsonResponse
     {
-        $similar = Listing::where('status', 'live')
+        $similar = Listing::where('status', 'active')
             ->where('property_type', $listing->property_type)
             ->where('id', '!=', $listing->id)
             ->whereBetween('price_php', [

@@ -29,7 +29,7 @@ export interface ProfilePayload {
 }
 
 export async function saveProfile(payload: ProfilePayload): Promise<void> {
-  await apiFetch("/v1/profile", {
+  await apiFetch("/v1/profile/onboarding", {
     method: "POST",
     body: JSON.stringify(payload),
   })

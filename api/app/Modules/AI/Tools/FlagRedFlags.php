@@ -93,7 +93,7 @@ class FlagRedFlags
         // Derive local median from live listings
         try {
             $median = DB::table('listings')
-                ->where('status', 'live')
+                ->where('status', 'active')
                 ->where('property_type', $type)
                 ->whereNull('deleted_at')
                 ->whereRaw("address->>'city' ilike ?", [$city])
@@ -294,7 +294,7 @@ class FlagRedFlags
                     ->where('listing_id', '!=', $listing->id)
                     ->where('phash', $phash)
                     ->join('listings', 'listings.id', '=', 'listings_photos.listing_id')
-                    ->where('listings.status', 'live')
+                    ->where('listings.status', 'active')
                     ->whereNull('listings.deleted_at')
                     ->first(['listings.id', 'listings.title']);
 

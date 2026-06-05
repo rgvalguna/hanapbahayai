@@ -78,7 +78,7 @@ class AdvisorController extends Controller
         $listings = [];
         if (!empty($validated['listing_ids'])) {
             $listings = Listing::whereIn('id', $validated['listing_ids'])
-                ->where('status', 'live')
+                ->where('status', 'active')
                 ->with('developer', 'broker')
                 ->get()
                 ->toArray();
