@@ -1,0 +1,321 @@
+<?php
+
+namespace Database\Seeders;
+
+use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
+
+class ListingSeeder extends Seeder
+{
+    public function run(): void
+    {
+        $now        = now();
+        $ayalaId    = DB::table('developers')->where('slug', 'ayala-land')->value('id');
+        $smdcId     = DB::table('developers')->where('slug', 'smdc')->value('id');
+        $dmciId     = DB::table('developers')->where('slug', 'dmci-homes')->value('id');
+        $rockwellId = DB::table('developers')->where('slug', 'rockwell-land')->value('id');
+
+        $listings = [
+            [
+                'title'         => 'Park Terraces Tower 1 — 2BR w/ Parking',
+                'slug'          => 'park-terraces-tower-1-2br',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 9_800_000,
+                'floor_area_sqm'=> 68.00,
+                'bedrooms'      => 2, 'bathrooms' => 2, 'parking_slots' => 1,
+                'developer_id'  => $ayalaId,
+                'address'       => ['street' => 'Ayala Ave cor. Makati Ave', 'barangay' => 'Bel-Air', 'city' => 'Makati', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1209', 'formatted' => 'Ayala Ave, Bel-Air, Makati'],
+                'lat' => 14.5565, 'lng' => 121.0190,
+                'amenity_tags'  => ['pool', 'gym', 'concierge', 'parking', 'pet_friendly'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'SMDC Jazz Residences — Studio Unit, BGC View',
+                'slug'          => 'smdc-jazz-residences-studio',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 4_200_000,
+                'floor_area_sqm'=> 24.50,
+                'bedrooms'      => 0, 'bathrooms' => 1, 'parking_slots' => 0,
+                'developer_id'  => $smdcId,
+                'address'       => ['street' => 'Jupiter St', 'barangay' => 'Bel-Air', 'city' => 'Makati', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1209', 'formatted' => 'Jupiter St, Bel-Air, Makati'],
+                'lat' => 14.5540, 'lng' => 121.0215,
+                'amenity_tags'  => ['pool', 'gym', 'near_mrt'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1502672260266-1c1ef2d93688?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'DMCI Kai Garden Residences — 1BR Loft',
+                'slug'          => 'dmci-kai-garden-1br-loft',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 5_650_000,
+                'floor_area_sqm'=> 42.00,
+                'bedrooms'      => 1, 'bathrooms' => 1, 'parking_slots' => 1,
+                'developer_id'  => $dmciId,
+                'address'       => ['street' => 'G. Araneta Ave', 'barangay' => 'Araneta', 'city' => 'Quezon City', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1114', 'formatted' => 'G. Araneta Ave, Quezon City'],
+                'lat' => 14.6205, 'lng' => 121.0461,
+                'amenity_tags'  => ['pool', 'gym', 'garden', 'resort_theme'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Rockwell Edades Tower — 3BR Premium Unit',
+                'slug'          => 'rockwell-edades-3br',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 28_500_000,
+                'floor_area_sqm'=> 152.00,
+                'bedrooms'      => 3, 'bathrooms' => 3, 'parking_slots' => 2,
+                'developer_id'  => $rockwellId,
+                'address'       => ['street' => 'Rockwell Drive', 'barangay' => 'Rockwell', 'city' => 'Makati', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1210', 'formatted' => 'Rockwell Drive, Rockwell, Makati'],
+                'lat' => 14.5636, 'lng' => 121.0321,
+                'amenity_tags'  => ['pool', 'gym', 'concierge', 'mall_access', 'parking', 'premium'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'SMDC Shore 3 Residences — 2BR Sea View',
+                'slug'          => 'smdc-shore-3-2br-sea-view',
+                'property_type' => 'condo',
+                'tenure_type'   => 'pre_selling',
+                'price_php'     => 7_300_000,
+                'floor_area_sqm'=> 50.00,
+                'bedrooms'      => 2, 'bathrooms' => 1, 'parking_slots' => 1,
+                'developer_id'  => $smdcId,
+                'address'       => ['street' => 'SMDC Shore Drive', 'barangay' => 'Mall of Asia Complex', 'city' => 'Pasay', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1300', 'formatted' => 'Mall of Asia Complex, Pasay'],
+                'lat' => 14.5351, 'lng' => 120.9821,
+                'amenity_tags'  => ['pool', 'gym', 'bay_view', 'near_mall'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Avida Townhomes Nuvali — 3BR End Unit',
+                'slug'          => 'avida-townhomes-nuvali-3br-end',
+                'property_type' => 'townhouse',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 4_850_000,
+                'floor_area_sqm'=> 78.00, 'lot_area_sqm' => 55.00,
+                'bedrooms'      => 3, 'bathrooms' => 2, 'parking_slots' => 1,
+                'developer_id'  => $ayalaId,
+                'address'       => ['street' => 'Avida Settings Nuvali', 'barangay' => 'Canlubang', 'city' => 'Calamba', 'province' => 'Laguna', 'region' => 'Region IV-A', 'zip' => '4028', 'formatted' => 'Avida Settings, Canlubang, Calamba, Laguna'],
+                'lat' => 14.2010, 'lng' => 121.0720,
+                'amenity_tags'  => ['parking', 'near_school', 'gated'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1568605114967-8130f3a36994?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Mandaluyong Greenfield District Townhouse',
+                'slug'          => 'mandaluyong-greenfield-townhouse',
+                'property_type' => 'townhouse',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 12_400_000,
+                'floor_area_sqm'=> 120.00, 'lot_area_sqm' => 70.00,
+                'bedrooms'      => 3, 'bathrooms' => 3, 'parking_slots' => 2,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Greenfield District', 'barangay' => 'Wack-Wack', 'city' => 'Mandaluyong', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1552', 'formatted' => 'Greenfield District, Wack-Wack, Mandaluyong'],
+                'lat' => 14.5793, 'lng' => 121.0489,
+                'amenity_tags'  => ['parking', 'near_mrt', 'near_mall'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1570129477492-45c003edd2be?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Ayala Westgrove Heights — 4BR Single Detached',
+                'slug'          => 'ayala-westgrove-heights-4br',
+                'property_type' => 'single_detached',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 18_500_000,
+                'floor_area_sqm'=> 220.00, 'lot_area_sqm' => 350.00,
+                'bedrooms'      => 4, 'bathrooms' => 4, 'parking_slots' => 2,
+                'developer_id'  => $ayalaId,
+                'address'       => ['street' => 'Westgrove Heights', 'barangay' => 'Sto. Tomas', 'city' => 'Silang', 'province' => 'Cavite', 'region' => 'Region IV-A', 'zip' => '4118', 'formatted' => 'Westgrove Heights, Sto. Tomas, Silang, Cavite'],
+                'lat' => 14.2269, 'lng' => 121.0006,
+                'amenity_tags'  => ['pool', 'garden', 'parking', 'near_school', 'gated', 'clubhouse'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'BF Homes Parañaque — 3BR Renovated House',
+                'slug'          => 'bf-homes-paranaque-3br-renovated',
+                'property_type' => 'single_detached',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 7_900_000,
+                'floor_area_sqm'=> 130.00, 'lot_area_sqm' => 180.00,
+                'bedrooms'      => 3, 'bathrooms' => 2, 'parking_slots' => 2,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Aguirre Ave', 'barangay' => 'BF Homes', 'city' => 'Paranaque', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1720', 'formatted' => 'Aguirre Ave, BF Homes, Paranaque'],
+                'lat' => 14.4631, 'lng' => 121.0168,
+                'amenity_tags'  => ['parking', 'near_school', 'gated'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Fairview Quezon City — 3BR Corner House',
+                'slug'          => 'fairview-qc-3br-corner',
+                'property_type' => 'single_detached',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 6_200_000,
+                'floor_area_sqm'=> 100.00, 'lot_area_sqm' => 200.00,
+                'bedrooms'      => 3, 'bathrooms' => 2, 'parking_slots' => 1,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Commonwealth Ave', 'barangay' => 'Fairview', 'city' => 'Quezon City', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1121', 'formatted' => 'Commonwealth Ave, Fairview, Quezon City'],
+                'lat' => 14.7049, 'lng' => 121.0614,
+                'amenity_tags'  => ['parking', 'near_school', 'gated'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1605276374104-dee2a0ed3cd6?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Multinational Village Paranaque — 5BR Executive Home',
+                'slug'          => 'multinational-village-5br-executive',
+                'property_type' => 'single_detached',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 32_000_000,
+                'floor_area_sqm'=> 380.00, 'lot_area_sqm' => 500.00,
+                'bedrooms'      => 5, 'bathrooms' => 5, 'parking_slots' => 4,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Dr. A. Santos Ave', 'barangay' => 'Multinational Village', 'city' => 'Paranaque', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1700', 'formatted' => 'Dr. A. Santos Ave, Multinational Village, Paranaque'],
+                'lat' => 14.4875, 'lng' => 121.0147,
+                'amenity_tags'  => ['pool', 'garden', 'parking', 'gated', 'clubhouse', 'premium'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1580587771525-78b9dba3b914?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Camella Cavite — 2BR Townhouse (Pag-IBIG Eligible)',
+                'slug'          => 'camella-cavite-2br-pagibig',
+                'property_type' => 'townhouse',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 1_980_000,
+                'floor_area_sqm'=> 44.00, 'lot_area_sqm' => 36.00,
+                'bedrooms'      => 2, 'bathrooms' => 1, 'parking_slots' => 0,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Camella Homes', 'barangay' => 'Punta II', 'city' => 'Tanza', 'province' => 'Cavite', 'region' => 'Region IV-A', 'zip' => '4108', 'formatted' => 'Camella Homes, Tanza, Cavite'],
+                'lat' => 14.3197, 'lng' => 120.8509,
+                'amenity_tags'  => ['gated', 'near_school'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1613977257363-707ba9348227?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Pag-IBIG ROPA — Taguig 2BR House',
+                'slug'          => 'pagibig-ropa-taguig-2br',
+                'property_type' => 'single_detached',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 1_200_000,
+                'floor_area_sqm'=> 38.00, 'lot_area_sqm' => 50.00,
+                'bedrooms'      => 2, 'bathrooms' => 1, 'parking_slots' => 0,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Signal Village', 'barangay' => 'Signal Village', 'city' => 'Taguig', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1630', 'formatted' => 'Signal Village, Taguig'],
+                'lat' => 14.5237, 'lng' => 121.0621,
+                'amenity_tags'  => ['near_school'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Alabang Hills Village — 500 sqm Lot',
+                'slug'          => 'alabang-hills-500sqm-lot',
+                'property_type' => 'lot_only',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 15_000_000,
+                'lot_area_sqm'  => 500.00,
+                'bedrooms'      => 0, 'bathrooms' => 0, 'parking_slots' => 0,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Alabang Hills Dr', 'barangay' => 'Alabang', 'city' => 'Muntinlupa', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1780', 'formatted' => 'Alabang Hills Dr, Alabang, Muntinlupa'],
+                'lat' => 14.4100, 'lng' => 121.0441,
+                'amenity_tags'  => ['gated', 'premium'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1500382017468-9049fed747ef?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Uptown Parksuites BGC — 2BR Fully Furnished',
+                'slug'          => 'uptown-parksuites-bgc-2br',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 18_800_000,
+                'floor_area_sqm'=> 75.00,
+                'bedrooms'      => 2, 'bathrooms' => 2, 'parking_slots' => 1,
+                'developer_id'  => $ayalaId,
+                'address'       => ['street' => 'Uptown Bonifacio', 'barangay' => 'BGC', 'city' => 'Taguig', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1630', 'formatted' => 'Uptown Bonifacio, BGC, Taguig'],
+                'lat' => 14.5493, 'lng' => 121.0524,
+                'amenity_tags'  => ['pool', 'gym', 'concierge', 'parking', 'near_mall', 'premium'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1600047509807-ba8f99d2cdde?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'One Bonifacio High Street — 3BR Corner Unit',
+                'slug'          => 'one-bonifacio-high-street-3br',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 35_000_000,
+                'floor_area_sqm'=> 145.00,
+                'bedrooms'      => 3, 'bathrooms' => 3, 'parking_slots' => 2,
+                'developer_id'  => $ayalaId,
+                'address'       => ['street' => 'Bonifacio High Street', 'barangay' => 'BGC', 'city' => 'Taguig', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1630', 'formatted' => 'Bonifacio High Street, BGC, Taguig'],
+                'lat' => 14.5504, 'lng' => 121.0520,
+                'amenity_tags'  => ['pool', 'gym', 'concierge', 'mall_access', 'parking', 'premium', 'pet_friendly'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Megaworld Viceroy Ortigas — 1BR w/ Balcony',
+                'slug'          => 'megaworld-viceroy-ortigas-1br',
+                'property_type' => 'condo',
+                'tenure_type'   => 'freehold',
+                'price_php'     => 5_900_000,
+                'floor_area_sqm'=> 38.00,
+                'bedrooms'      => 1, 'bathrooms' => 1, 'parking_slots' => 0,
+                'developer_id'  => null,
+                'address'       => ['street' => 'Meralco Ave', 'barangay' => 'Ugong', 'city' => 'Pasig', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1604', 'formatted' => 'Meralco Ave, Ugong, Pasig'],
+                'lat' => 14.5832, 'lng' => 121.0589,
+                'amenity_tags'  => ['pool', 'gym', 'near_mall'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+            [
+                'title'         => 'Robinsons Residences Ortigas — Studio Investment Unit',
+                'slug'          => 'robinsons-residences-ortigas-studio',
+                'property_type' => 'condo',
+                'tenure_type'   => 'rfo',
+                'price_php'     => 3_500_000,
+                'floor_area_sqm'=> 22.00,
+                'bedrooms'      => 0, 'bathrooms' => 1, 'parking_slots' => 0,
+                'developer_id'  => null,
+                'address'       => ['street' => 'ADB Ave', 'barangay' => 'Ortigas Center', 'city' => 'Pasig', 'province' => 'Metro Manila', 'region' => 'NCR', 'zip' => '1605', 'formatted' => 'ADB Ave, Ortigas Center, Pasig'],
+                'lat' => 14.5848, 'lng' => 121.0574,
+                'amenity_tags'  => ['pool', 'gym', 'near_mrt'],
+                'photos'        => [['url' => 'https://images.unsplash.com/photo-1536376072261-38c75010e6c9?w=800', 'is_primary' => true, 'order' => 0]],
+            ],
+        ];
+
+        foreach ($listings as $data) {
+            $lat = $data['lat'];
+            $lng = $data['lng'];
+            $id  = (string) Str::uuid();
+
+            $floorArea = $data['floor_area_sqm'] ?? null;
+            $lotArea   = $data['lot_area_sqm'] ?? null;
+
+            $pricePerSqm = null;
+            if ($floorArea && $floorArea > 0) {
+                $pricePerSqm = round($data['price_php'] / $floorArea, 2);
+            } elseif ($lotArea && $lotArea > 0) {
+                $pricePerSqm = round($data['price_php'] / $lotArea, 2);
+            }
+
+            DB::table('listings')->insert([
+                'id'             => $id,
+                'source'         => 'admin_import',
+                'status'         => 'active',
+                'property_type'  => $data['property_type'],
+                'tenure_type'    => $data['tenure_type'] ?? null,
+                'title'          => $data['title'],
+                'slug'           => $data['slug'],
+                'price_php'      => $data['price_php'],
+                'price_per_sqm'  => $pricePerSqm,
+                'floor_area_sqm' => $floorArea,
+                'lot_area_sqm'   => $lotArea,
+                'bedrooms'       => $data['bedrooms'],
+                'bathrooms'      => $data['bathrooms'],
+                'parking_slots'  => $data['parking_slots'],
+                'address'        => json_encode($data['address']),
+                'developer_id'   => $data['developer_id'] ?? null,
+                'photos'         => json_encode($data['photos']),
+                'amenity_tags'   => json_encode($data['amenity_tags']),
+                'fraud_flags'    => json_encode([]),
+                'fraud_score'    => 0,
+                'is_verified'    => true,
+                'created_at'     => $now,
+                'updated_at'     => $now,
+            ]);
+
+            DB::statement(
+                'UPDATE listings SET location = ST_SetSRID(ST_MakePoint(?, ?), 4326) WHERE id = ?',
+                [$lng, $lat, $id]
+            );
+        }
+    }
+}
